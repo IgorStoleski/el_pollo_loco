@@ -6,7 +6,7 @@ class MovableObject{
     img;
     imageCache= [];
     currentImage = 0;
-    speed = 0.2;
+    speed = 0.15;
     otherDirection = false;
 
 
@@ -25,7 +25,6 @@ class MovableObject{
     }
 
     moveRight() {
-        console.log('Moveing Right');
     }
 
     moveLeft(){
