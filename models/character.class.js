@@ -27,8 +27,6 @@ class Character extends MovableObject{
 
         setInterval(() => {
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                console.log("RIGHT key pressed");
-                console.log("x:", this.x);
                 this.x += this.speed;
                 this.otherDirection = false;
             }
@@ -41,7 +39,6 @@ class Character extends MovableObject{
 
         setInterval(() => {
             if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.x += this.speed;
 
                 let i = this.currentImage % this.IMAGES_WALKING.length;
                 let path = this.IMAGES_WALKING[i];
