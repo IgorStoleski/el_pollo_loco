@@ -6,6 +6,8 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
+    coinBar = new CoinBar();
+    bottleBar = new BottleBar();
     throwableObjects = [];
 
 
@@ -53,16 +55,18 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
 
-        this.ctx.translate(-this.camera_x, 0);
-        // -------- Space for fixed Objects -------------
-        this.addToMap(this.statusBar);
-        this.ctx.translate(this.camera_x, 0);
-
-        this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
-
+        
+        this.ctx.translate(-this.camera_x, 0);
+        // -------- Space for fixed Objects -------------
+        this.addToMap(this.statusBar);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.bottleBar);
+        this.ctx.translate(this.camera_x, 0);
+        
+        this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         
         requestAnimationFrame(() => this.draw());
