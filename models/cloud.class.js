@@ -14,7 +14,6 @@ class Cloud extends MovableObject{
     generateRandomXPositionForZone(zone){
         let minX, maxX;
 
-        // Abhängig von der Zone, setze die Grenzen für die X-Position
         if(zone === 1){
             minX = 0;
             maxX = 719;
