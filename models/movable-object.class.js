@@ -38,9 +38,10 @@ class MovableObject extends DrawableObject {
                 this.energy = 0;
             }
             this.lastHit = new Date().getTime();
-            console.log(this.energy);
         }
     }
+
+    
 
     isHurt(){
         let timePassed = new Date().getTime() - this.lastHit;
@@ -51,8 +52,6 @@ class MovableObject extends DrawableObject {
     isDead(){
         return this.energy == 0;
     }   
-
-    
 
     playAnimation(images){
         let i = this.currentImage % images.length;
