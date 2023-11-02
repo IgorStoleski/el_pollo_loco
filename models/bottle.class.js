@@ -13,5 +13,4 @@ class Bottle extends DrawableObject {
 
     }
 
-
 }
