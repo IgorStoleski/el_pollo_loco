@@ -11,14 +11,16 @@ class World {
     coins = [];
     bottle = [];
     throwableObjects = [];
-    coin_sound = new Audio('audio/coin.mp3');
-    bottle_sound = new Audio('audio/bottle.mp3');
+    
+    
 
 
     constructor(canvas, keyboard){
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.coin_sound = new Audio('audio/coin.mp3');
+        this.bottle_sound = new Audio('audio/bottle.mp3');
         this.draw();
         this.setWorld();
         this.run();
@@ -79,10 +81,13 @@ class World {
         });
     }
 
+    
+
     checkSplashBottle() {
         this.throwableObjects.forEach((bottle) => {
-            if (bottle.isColliding(this.level.enemies.Endboss)) {
-                this.playAnimation(this.SPLASH_IMAGES);
+            if (this.level.enemies[0] && bottle.isColliding(this.level.enemies[0])) {
+                console.log('splash');
+                bottle.breakBottle();
             }
         });
     }
