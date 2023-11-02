@@ -1,4 +1,8 @@
 class ThrowableObject extends MovableObject {
+    
+    
+    
+    
 
     THROW_IMAGES = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -24,8 +28,10 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 100;
         this.width = 100;
+        this.broken = false;
         this.thow(x, y);
-        
+        this.animation();
+        this.splash_sound = new Audio('audio/bottle_smash.mp3');
     }
 
 
@@ -35,14 +41,29 @@ class ThrowableObject extends MovableObject {
         this.speedY = 30;
         this.applyGravity();        
         setInterval(() => {
-            this.playAnimation(this.THROW_IMAGES);
             this.x += 10;
         }, 25);
     }
 
-    splashBottle() {
-        if (this.bottle.isColliding(this.world.level.enemies.Endboss)) {
+    breakBottle() {
+        if (!this.broken) {
+            this.broken = true;            
             this.playAnimation(this.SPLASH_IMAGES);
+            this.splash_sound.loop = false;
+            this.splash_sound.play();
         }
     }
+
+    animation() {
+        setInterval(() => {
+            if (this.y >= 300 && !this.broken) {
+                
+                this.breakBottle();
+            } else {
+                this.playAnimation(this.THROW_IMAGES);
+            }
+        }, 25);
+    }
+
+    
 }
