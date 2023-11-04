@@ -1,5 +1,5 @@
 class ThrowableObject extends MovableObject {
-    
+    hitBoss = false;
     
     
     
@@ -56,8 +56,7 @@ class ThrowableObject extends MovableObject {
 
     animation() {
         setInterval(() => {
-            if (this.y >= 300 && !this.broken) {
-                
+            if (this.y >= 300 || this.hitBoss) {                
                 this.breakBottle();
             } else {
                 this.playAnimation(this.THROW_IMAGES);
