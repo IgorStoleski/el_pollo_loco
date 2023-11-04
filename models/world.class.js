@@ -11,6 +11,7 @@ class World {
     coins = [];
     bottle = [];
     throwableObjects = [];
+    bossEnergy = 90;
     
     
 
@@ -79,9 +80,7 @@ class World {
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
-    }
-
-    
+    }    
 
     checkSplashBottle() {
         this.throwableObjects.forEach((bottle) => {
@@ -89,6 +88,8 @@ class World {
                 console.log('splash');
                 bottle.hitBoss = true;
                 bottle.breakBottle();
+                this.level.enemies[0].bottleHitBoss(); 
+
             }
         });
     }
