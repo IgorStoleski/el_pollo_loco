@@ -87,6 +87,7 @@ class World {
         this.throwableObjects.forEach((bottle) => {
             if (this.level.enemies[0] && bottle.isColliding(this.level.enemies[0])) {
                 console.log('splash');
+                bottle.hitBoss = true;
                 bottle.breakBottle();
             }
         });
