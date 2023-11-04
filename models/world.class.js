@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    endBoss = new Endboss();
     level = level1;
     canvas;
     ctx;
@@ -38,6 +39,7 @@ class World {
             this.checkBottles();
             this.checkThowObjects();
             this.checkSplashBottle();
+            this.checkCollisionsBoss();
         }, 200)
     }
 
@@ -75,23 +77,43 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if(this.character.isColliding(enemy)){
+            if(this.character.isColliding(enemy) && this.character.isAboveGround()){
+                this.chickenAlive = false;
+                enemy.chickenIsDead();
+                this.level.enemies.splice(this.level.enemies.indexOf(enemy), 1);
+            } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
-    }    
+    } 
+
+    checkCollisionsBoss() {
+        if(this.character.isColliding(this.endBoss)){
+            this.character.hit();
+            this.statusBar.setPercentage(this.character.energy);
+        }
+        
+    }
 
     checkSplashBottle() {
         this.throwableObjects.forEach((bottle) => {
-            if (this.level.enemies[0] && bottle.isColliding(this.level.enemies[0])) {
+            if (this.endBoss && bottle.isColliding(this.endBoss)) {
                 console.log('splash');
                 bottle.hitBoss = true;
                 bottle.breakBottle();
-                this.level.enemies[0].bottleHitBoss(); 
+                this.endBoss.bottleHitBoss(); 
 
             }
         });
+    }
+
+    hitChicken() {
+        if (this.level.enemies.isColliding(this.character)) {
+            this.level.enemies.chickenIsDead();
+            this.level.enemies.splice
+            
+        }
     }
 
     draw(){
@@ -101,6 +123,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.endBoss);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
