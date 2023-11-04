@@ -4,6 +4,7 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2;
     energy = 100;
+    bossEnergy = 100;
     lastHit = 0;
 
 
@@ -20,7 +21,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) {
             return true;
         } else {
-            return this.y < 130;
+            return this.y < 130 ;
         }
     }
 
@@ -52,6 +53,20 @@ class MovableObject extends DrawableObject {
     isDead(){
         return this.energy == 0;
     }   
+
+    bottleHitBoss() {
+        if (this.bossEnergy > 0) {
+            this.bossEnergy -= 25;
+            if (this.bossEnergy < 0) {
+                this.bossEnergy = 0;
+            }
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    bossIsDead() {
+        return this.bossEnergy == 0;
+    }
 
     playAnimation(images){
         let i = this.currentImage % images.length;
