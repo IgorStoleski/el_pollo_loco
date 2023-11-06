@@ -23,6 +23,7 @@ class World {
         this.keyboard = keyboard;
         this.coin_sound = new Audio('audio/coin.mp3');
         this.bottle_sound = new Audio('audio/bottle.mp3');
+        this.pain_sound = new Audio('audio/pain.mp3');
         this.draw();
         this.setWorld();
         this.run();
@@ -83,6 +84,7 @@ class World {
                 this.level.enemies.splice(this.level.enemies.indexOf(enemy), 1);
             } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                 this.character.hit();
+                this.pain_sound.play();
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
@@ -91,6 +93,7 @@ class World {
     checkCollisionsBoss() {
         if(this.character.isColliding(this.endBoss)){
             this.character.hit();
+            this.pain_sound.play();
             this.statusBar.setPercentage(this.character.energy);
         }
         
@@ -108,13 +111,7 @@ class World {
         });
     }
 
-    hitChicken() {
-        if (this.level.enemies.isColliding(this.character)) {
-            this.level.enemies.chickenIsDead();
-            this.level.enemies.splice
-            
-        }
-    }
+    
 
     draw(){
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
