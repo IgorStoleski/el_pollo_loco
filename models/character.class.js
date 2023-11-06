@@ -53,6 +53,8 @@ class Character extends MovableObject{
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+        this.jump_sound = new Audio('audio/jump.mp3');
+        this.air_sound = new Audio('audio/air.mp3');
         this.applyGravity();
         this.animate();
 
@@ -65,16 +67,26 @@ class Character extends MovableObject{
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();
+                if (!this.isAboveGround()) {
+                    this.walking_sound.play();
+                } else {
+                    this.air_sound.play();
+                }
             }
             if(this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.walking_sound.play();
+                if (!this.isAboveGround()) {
+                    this.walking_sound.play();
+                } else {
+                    this.air_sound.play();
+                }
+                
             }
 
             if(this.world.keyboard.SPACE  && !this.isAboveGround()) {
                 this.jump();
+                this.jump_sound.play();
             }
 
             this.world.camera_x = -this.x + 100;
