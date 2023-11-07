@@ -79,16 +79,18 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if(this.character.isColliding(enemy) && this.character.isAboveGround()){
-                this.chickenAlive = false;
-                enemy.chickenIsDead();
+                this.isDying = true;
+                this.character.smallJump();
                 this.level.enemies.splice(this.level.enemies.indexOf(enemy), 1);
-            } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
+               
+                
+            } else if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.pain_sound.play();
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
-    } 
+    }
 
     checkCollisionsBoss() {
         if(this.character.isColliding(this.endBoss)){
@@ -150,7 +152,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        /* mo.drawFrame(this.ctx); */
         
 
         if(mo.otherDirection){
