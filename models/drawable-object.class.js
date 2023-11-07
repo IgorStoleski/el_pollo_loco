@@ -21,7 +21,7 @@ class DrawableObject {
         }
     }
 
-    drawFrame(ctx){
+    /* drawFrame(ctx){
 
         if(this instanceof Character || this instanceof Chicken){
             ctx.beginPath();
@@ -30,7 +30,7 @@ class DrawableObject {
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
         }
-    }
+    } */
 
     loadImages(arr){
         arr.forEach((path) => {
