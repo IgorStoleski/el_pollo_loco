@@ -4,6 +4,14 @@ class Character extends MovableObject{
     y = 130;
     speed = 3;
     imageCache = [];
+
+    offset = {
+        left: 50,
+        right: 50,
+        top: 150,
+        bottom: 150
+    };
+
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',

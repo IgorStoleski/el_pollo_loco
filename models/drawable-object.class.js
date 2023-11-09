@@ -6,6 +6,12 @@ class DrawableObject {
     img;
     imageCache= {};
     currentImage = 0;
+    offset = {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
+    };
 
     loadImage(path){
         this.img = new Image();
@@ -21,16 +27,19 @@ class DrawableObject {
         }
     }
 
-    /* drawFrame(ctx){
+    drawFrame(ctx){
 
-        if(this instanceof Character || this instanceof Chicken){
+        if(this instanceof Character || this instanceof Chicken || this instanceof Small || this instanceof Coins || this instanceof Bottle || this instanceof GroundBottle){
             ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.lineWidth = '2';
+            ctx.strokeStyle = 'red';
+            ctx.rect(this.offset.left + this.x,
+                this.offset.bottom + this.y,
+                this.offset.right,
+                this.offset.top);
             ctx.stroke();
         }
-    } */
+    }
 
     loadImages(arr){
         arr.forEach((path) => {
