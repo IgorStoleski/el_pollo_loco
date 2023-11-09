@@ -8,11 +8,13 @@ class World {
     camera_x = 0;
     statusBar = new StatusBar();
     coinBar = new CoinBar();
-    bottleBar = new BottleBar(); 
+    bottleBar = new BottleBar();
+    statusBarEndboss = new StatusBarEndboss();
+    endbossIcon = new EndbossIcon();
     coins = [];
     bottle = [];
     throwableObjects = [];
-    bossEnergy = 90;
+    
     
     
 
@@ -24,6 +26,7 @@ class World {
         this.coin_sound = new Audio('audio/coin.mp3');
         this.bottle_sound = new Audio('audio/bottle.mp3');
         this.pain_sound = new Audio('audio/pain.mp3');
+        this.music = new Audio('audio/mexico.mp3');
         this.draw();
         this.setWorld();
         this.run();
@@ -34,6 +37,7 @@ class World {
     }
 
     run(){
+        //this.music.play();
         setInterval(() => {            
             this.checkCollisions();
             this.checkCoins();
@@ -78,20 +82,20 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if(this.character.isColliding(enemy) && this.character.isAboveGround()){
-                this.isDying = true;
+            if(!enemy.isDying && this.character.isColliding(enemy) && this.character.isAboveGround()){
+                enemy.chickenIsDead();
                 this.character.smallJump();
-                this.level.enemies.splice(this.level.enemies.indexOf(enemy), 1);
-               
-                
-            } else if (this.character.isColliding(enemy)) {
+                setTimeout(() => {
+                    this.level.enemies.splice(this.level.enemies.indexOf(enemy), 1);
+                }, 500);    
+            } else if (!enemy.isDying && this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.pain_sound.play();
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
     }
-
+ 
     checkCollisionsBoss() {
         if(this.character.isColliding(this.endBoss)){
             this.character.hit();
@@ -99,16 +103,15 @@ class World {
             this.statusBar.setPercentage(this.character.energy);
         }
         
-    }
+    } 
 
     checkSplashBottle() {
         this.throwableObjects.forEach((bottle) => {
             if (this.endBoss && bottle.isColliding(this.endBoss)) {
-                console.log('splash');
                 bottle.hitBoss = true;
                 bottle.breakBottle();
                 this.endBoss.bottleHitBoss(); 
-
+                this.statusBarEndboss.setPercentage(this.endBoss.bossEnergy);
             }
         });
     }
@@ -131,7 +134,10 @@ class World {
         // -------- Space for fixed Objects -------------
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
-        this.addToMap(this.bottleBar);
+        this.addToMap(this.bottleBar);        
+        this.addToMapFlip(this.statusBarEndboss);          
+        this.addToMap(this.endbossIcon);        
+        // ----------------------------------------------
         this.ctx.translate(this.camera_x, 0);
         
         this.addToMap(this.character);
@@ -152,12 +158,21 @@ class World {
         }
 
         mo.draw(this.ctx);
-        /* mo.drawFrame(this.ctx); */
+        mo.drawFrame(this.ctx);
         
 
         if(mo.otherDirection){
             this.flipImageBack();
         }
+    }
+
+    addToMapFlip(mo){
+        this.ctx.save();
+        this.ctx.translate(mo.x + mo.width / 2, 0);
+        this.ctx.scale(-1, 1);
+        this.ctx.translate((mo.x + mo.width / 2) * -1, 0);
+        mo.draw(this.ctx);
+        this.ctx.restore();
     }
 
     flipImage(mo){
