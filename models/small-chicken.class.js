@@ -6,9 +6,9 @@ class Small extends MovableObject {
     isDying = false;
 
     offset = {
-        left: 0,
-        right: 50,
-        top: 60,
+        left: 20,
+        right: 20,
+        top: 0,
         bottom: 0
     };
 
@@ -31,9 +31,9 @@ class Small extends MovableObject {
         this.animate();
     }
 
-    /* chickenWalk = setInterval(() => {
+    chickenWalk = setInterval(() => {
         this.x -= this.speed;
-    }, 1000 / 60) */
+    }, 1000 / 60)
 
 
     animate(){

@@ -7,9 +7,9 @@ class Chicken extends MovableObject{
     isDying = false;
 
     offset = {
-        left: 0,
-        right: 80,
-        top: 90,
+        left: 30,
+        right: 30,
+        top: 0,
         bottom: 0
     };
 
@@ -34,12 +34,12 @@ class Chicken extends MovableObject{
         
         this.x = 500 + Math.random() * 2000;
         this.speed = 0.2 + Math.random() * 0.3;
-        //this.animate();
+        this.animate();
     }
 
-    /* chickenWalk = setInterval(() => {
+    chickenWalk = setInterval(() => {
         this.x -= this.speed;
-    }, 1000 / 60) */
+    }, 1000 / 60)
 
 
     animate(){

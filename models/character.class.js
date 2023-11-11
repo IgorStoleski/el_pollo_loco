@@ -9,7 +9,7 @@ class Character extends MovableObject{
         left: 50,
         right: 50,
         top: 150,
-        bottom: 150
+        bottom: 0
     };
 
     IMAGES_WALKING = [
