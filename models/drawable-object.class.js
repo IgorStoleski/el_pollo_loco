@@ -47,8 +47,8 @@ class DrawableObject {
             ctx.strokeStyle = 'red';
             ctx.rect(this.offset.left + this.x,
                 this.offset.bottom + this.y,
-                this.offset.right,
-                this.offset.top);
+                this.offset.right + this.width,
+                this.offset.top + this.height );
             ctx.stroke();
             
         }
