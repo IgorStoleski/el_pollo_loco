@@ -6,10 +6,10 @@ class Character extends MovableObject{
     imageCache = [];
 
     offset = {
-        left: 50,
-        right: 50,
-        top: 150,
-        bottom: 0
+        top: 120,
+        left: 40,
+        right: 30,
+        bottom: 10
     };
 
     IMAGES_WALKING = [
