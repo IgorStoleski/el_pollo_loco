@@ -2,6 +2,14 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 45;
+    world;
+
+    offset = {
+        left: 10,
+        right: 0,
+        top: 0,
+        bottom: 0
+    };
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -42,11 +50,19 @@ class Endboss extends MovableObject {
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.bossIsDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+                this.playAnimation(this.IMAGES_DEAD);                
+                document.getElementById('settings').classList.add('d-none-important');
+                this.gameOver();                
             } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 200);
+    }
+
+    gameOver() {
+        document.getElementById('end-screen').classList.remove('d-none');
+        world.win_sound.loop = false;
+        world.win_sound.play();  
     }
 
 }
