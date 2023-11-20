@@ -27,6 +27,11 @@ class World {
         this.bottle_sound = new Audio('audio/bottle.mp3');
         this.pain_sound = new Audio('audio/pain.mp3');
         this.music = new Audio('audio/mexico.mp3');
+        this.jump_sound = new Audio('audio/jump.mp3');
+        this.air_sound = new Audio('audio/air.mp3');
+        this.splash_sound = new Audio('audio/bottle_smash.mp3');
+        this.walking_sound = new Audio('audio/walking.mp3');
+        this.win_sound = new Audio('audio/win.mp3');
         this.draw();
         this.setWorld();
         this.run();
@@ -37,7 +42,7 @@ class World {
     }
 
     run(){
-        //this.music.play();
+        this.music.play();
         setInterval(() => {            
             this.checkCollisions();
             this.checkCoins();
@@ -107,15 +112,18 @@ class World {
 
     checkSplashBottle() {
         this.throwableObjects.forEach((bottle) => {
-            if (this.endBoss && bottle.isColliding(this.endBoss)) {
+            if (this.endBoss && bottle.isColliding(this.endBoss) && !bottle.hitBoss) {
                 bottle.hitBoss = true;
                 bottle.breakBottle();
-                this.endBoss.bottleHitBoss(); 
+                this.splash_sound.loop = false;
+                this.splash_sound.play();
+                this.endBoss.bottleHitBoss();
                 this.statusBarEndboss.setPercentage(this.endBoss.bossEnergy);
             }
         });
     }
-
+    
+    
     
 
     draw(){
@@ -158,8 +166,8 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
-        mo.drawInnerFrame(this.ctx);
+        /* mo.drawFrame(this.ctx);
+        mo.drawInnerFrame(this.ctx); */
         
 
         if(mo.otherDirection){
@@ -186,7 +194,6 @@ class World {
     flipImageBack(){
         this.ctx.restore();
     }
-    
     
 
 }
