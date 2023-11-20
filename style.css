@@ -1,9 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 @font-face {
     font-family: 'zabars';
     src: url('fonts/Zabars.ttf') format('truetype');
 }
+
+.d-none {
+    display: none;
+}
+
+.v-hidden {
+    visibility: hidden;
+}
+
+.d-none-important {
+    display: none !important;
+}
+
 body  {
-    margin: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -13,18 +30,59 @@ body  {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    font-family: 'Zabars', Arial, Helvetica, sans-serif;
 }
 
 .screen {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     
-    font-family: 'zabars', Arial, Helvetica, sans-serif;
+    
+}
+
+.startscreen, .endscreen{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.mobile-btn{
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 720px;
+    width: 100%;
+    bottom: 4px;
+}
+
+.left-hud, .right-hud {
+    display: flex;
+    gap: 16px;
+}
+
+.startscreen-img, .endscreen-img, .endscreen-img-bg {
+    width: 100%;
+    height: 100%;
+}
+
+.endscreen-img{
+   position: absolute;
+   top: 0;
+   left: 0;
+}
+
+.endscreen-img-bg {
+    position: relative;
 }
 
 h1 {
+    
     font-size: 64px;
     letter-spacing: 3px;
     text-shadow: 8px 1px 4px rgba(0, 0, 0, 0.5);
@@ -35,10 +93,113 @@ canvas {
     display: block;
 }
 
+.start-btn, .restart-btn {
+    position: absolute;
+    top: 40px;
+    left: 40%;
+	box-shadow:inset 0px 1px 11px 0px #fadc1b;
+	background:linear-gradient(to bottom, #f5cc85 5%, #ffab23 100%);
+	background-color:#f5cc85;
+	border-radius:42px;
+	border:1px solid #ffa600;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-size:32px;
+	font-weight:bold;
+	padding:16px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffee66;
+}
+.start-btn:hover, .restart-btn:hover {
+	background:linear-gradient(to bottom, #ffab23 5%, #f5cc85 100%);
+	background-color:#ffab23;
+}
+
+.left-btn {
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+}
+
+.left-walk {
+    width: 24px;
+    height: 24px;
+    transform: scaleX(-1);
+}
+
+.right-btn {
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+}
+
+.right-walk, .jump, .throw {
+    width: 24px;
+    height: 24px;
+}
+
+.jump-btn {
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+}
+
+.throw-btn {
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+}
+
+.instruction {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 720px;
+    width: 100%;	
+    height: 30px;
+    font-size: 32px;
+}
+
+.arrow-center{
+    display: flex;
+    align-items: center;
+}
+
+.arrow{
+    width: 32px;
+}
+
+.settings {
+    position: absolute;
+    top: 4px;
+    right: 50%;
+}
+
+.volume-img {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
 /* --------- Smartphones ----------- */
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
+    }
+    .headline {
+        display: none;
+    }
+    .instruction {
+        display: none;
     }
 }
 
