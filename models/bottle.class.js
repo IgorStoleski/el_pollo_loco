@@ -13,11 +13,12 @@ class Bottle extends DrawableObject {
         'img/6_salsa_bottle/salsa_bottle.png'
     ];
 
+    /**
+     * Represents an instance of a game object.
+     */
     constructor() {
         super().loadImage(this.IMAGE);
         this.x = 300 + Math.random() * 1800;
         this.y = 30 + Math.random() * 300;
-
     }
-
 }

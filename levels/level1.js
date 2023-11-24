@@ -1,16 +1,19 @@
 let level1;
 
+/**
+ * Initialize the level
+ */
 function initLevel() {
 
     level1 = new Level(
         [
-            /* new Chicken(),
+            new Chicken(),
             new Chicken(),
             new Chicken(),
             new Chicken(),
             new Small(),
             new Small(),
-            new Small() */
+            new Small()
         ],
         [
             new Cloud(1),

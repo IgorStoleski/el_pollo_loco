@@ -23,11 +23,11 @@ class Chicken extends MovableObject{
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
     ];
 
-
     walking_chicken_sound = new Audio('audio/chicken.mp3');
     
-
-
+    /**
+     * Represents an instance of a game object.
+     */
     constructor(){
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -37,11 +37,18 @@ class Chicken extends MovableObject{
         this.animate();
     }
 
+    /**
+     * Initiates a walking sound for the chicken.
+     */
     chickenWalk = setInterval(() => {
         this.x -= this.speed;
     }, 1000 / 60)
 
-
+    /**
+     * Initiates an animation sequence for the chicken.
+     * Uses setInterval to repeatedly play walking animation frames,
+     * stopping if the chicken is dying to load the dead chicken image.
+     */
     animate(){
         this.chickenWalk;
         setInterval(() => {
@@ -54,10 +61,10 @@ class Chicken extends MovableObject{
         }, 200);
     }
 
+    /**
+     * Sets the chicken to dying state.
+     */
     chickenIsDead() {
         this.isDying = true;
     }
-
-   
-
 }

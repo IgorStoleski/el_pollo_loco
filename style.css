@@ -38,12 +38,46 @@ body  {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    
-    
+    justify-content: center; 
 }
 
-.startscreen, .endscreen{
+.fullscreen {
+    width: 100%;
+    height: 100%;
+}
+
+.device {
+    position: absolute;
+    display: flex;
+    background-color: #333333;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 10;
+}
+
+.device-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    gap: 32px;
+}
+
+h3 {
+    font-size: 40px;
+    letter-spacing: 3px;
+    text-shadow: 8px 1px 4px rgba(0, 0, 0, 0.5);
+    color: azure;
+    text-align: center;
+}
+
+.mobile-device {
+    width: 60px;
+}
+
+.startscreen, .endscreen, .you-lost-screen {
     position: absolute;
     top: 0;
     left: 0;
@@ -63,21 +97,21 @@ body  {
 
 .left-hud, .right-hud {
     display: flex;
-    gap: 16px;
+    gap: 32px;
 }
 
-.startscreen-img, .endscreen-img, .endscreen-img-bg {
+.startscreen-img, .endscreen-img, .endscreen-img-bg, .you-lose-img, .you-lose-img-bg {
     width: 100%;
     height: 100%;
 }
 
-.endscreen-img{
+.endscreen-img, .you-lose-img {
    position: absolute;
    top: 0;
    left: 0;
 }
 
-.endscreen-img-bg {
+.endscreen-img-bg, .you-lose-img-bg {
     position: relative;
 }
 
@@ -91,11 +125,13 @@ h1 {
 canvas {
     background-color: black;
     display: block;
+    width: 720px;
+    height: 480px;
 }
 
 .start-btn, .restart-btn {
     position: absolute;
-    top: 40px;
+    top: 10px;
     left: 40%;
 	box-shadow:inset 0px 1px 11px 0px #fadc1b;
 	background:linear-gradient(to bottom, #f5cc85 5%, #ffab23 100%);
@@ -125,8 +161,8 @@ canvas {
 }
 
 .left-walk {
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     transform: scaleX(-1);
 }
 
@@ -139,8 +175,8 @@ canvas {
 }
 
 .right-walk, .jump, .throw {
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
 }
 
 .jump-btn {
@@ -181,19 +217,29 @@ canvas {
 .settings {
     position: absolute;
     top: 4px;
-    right: 50%;
+    right: 45%;
 }
 
-.volume-img {
+.volume-img, .fullscreen-img {
     width: 32px;
     height: 32px;
     cursor: pointer;
 }
 
+@media (orientation: landscape) {
+    .device {
+        display: none !important;
+    }
+}
+
 /* --------- Smartphones ----------- */
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 933px) {
     canvas {
         width: 100%;
+    }
+    .screen {
+        width: 100%;
+        height: 100%;
     }
     .headline {
         display: none;
@@ -201,11 +247,44 @@ canvas {
     .instruction {
         display: none;
     }
+    .start-btn, .restart-btn{
+        font-size: 16px;
+        padding: 8px 12px;
+    }
 }
 
 /* --------- Smartphones ----------- */
 @media only screen and (max-height: 480px) {
     canvas {
-        height: 100vh;
+        height: 100vh !important;
+    }
+}
+
+.device-center>img {
+    transform-origin: center;
+    transform: rotateX(0deg) rotateZ(0deg) translateY(0px);
+}
+
+.device-center>img {
+    transform-origin: center;
+    transform: rotateX(0deg) rotateZ(0deg) translateY(0px);
+    animation: rotateAnimation 4s linear infinite; 
+}
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotateX(0deg) rotateZ(0deg) translateY(0px);
+    }
+    25% {
+        transform: rotateX(0deg) rotateZ(30deg) translateY(0px);
+    }
+    50% {
+        transform: rotateX(0deg) rotateZ(60deg) translateY(0px);
+    }
+    75% {
+        transform: rotateX(0deg) rotateZ(90deg) translateY(0px);
+    }
+    100% {
+        transform: rotateX(0deg) rotateZ(0deg) translateY(0px); 
     }
 }

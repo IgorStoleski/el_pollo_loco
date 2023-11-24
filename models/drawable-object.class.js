@@ -13,11 +13,19 @@ class DrawableObject {
         bottom: 0
     };
 
+    /**
+     * Loads an image from the specified path.
+     * @param {string} path - The path to the image file.
+     */
     loadImage(path){
         this.img = new Image();
         this.img.src = path;
     }
 
+    /**
+     * Draws an image on the canvas context.
+     * @param {CanvasRenderingContext2D} ctx - The canvas 2D rendering context.
+     */
     draw(ctx){
         try {
             ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -27,39 +35,15 @@ class DrawableObject {
         }
     }
 
-    drawFrame(ctx){
-
-        if(this instanceof Character || this instanceof Chicken || this instanceof Small || this instanceof Coins || this instanceof Bottle || this instanceof GroundBottle){
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-            
-        }
-    }
-
-    drawInnerFrame(ctx){
-
-        if(this instanceof Character || this instanceof Chicken || this instanceof Small || this instanceof Coins || this instanceof Bottle || this instanceof GroundBottle){
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'red';
-            ctx.rect(this.offset.left + this.x,
-                this.offset.bottom + this.y,
-                this.offset.right + this.width,
-                this.offset.top + this.height );
-            ctx.stroke();
-            
-        }
-    }
-
+    /**
+     * Loads images from an array of paths into the image cache.
+     * @param {string[]} arr - An array of image paths to load.
+     */
     loadImages(arr){
         arr.forEach((path) => {
             let img = new Image();
             img.src = path;
             this.imageCache[path] = img;
-        });
-        
+        });        
     }
 }

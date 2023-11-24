@@ -15,6 +15,9 @@ class StatusBarEndboss extends DrawableObject {
 
     percentage = 100;
 
+    /**
+     * Represents an instance of a game object.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH);
@@ -25,6 +28,10 @@ class StatusBarEndboss extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * Sets the percentage and updates the image accordingly.
+     * @param {number} percentage - The new percentage value.
+     */
     setPercentage(percentage) {
         if (percentage >= 0) {
             this.percentage = percentage;
@@ -33,6 +40,9 @@ class StatusBarEndboss extends DrawableObject {
         }
     }
 
+    /**
+     * Resolves the image index based on the percentage value.
+     */
     resolveImageIndex() {
         if (this.percentage == 100 ) {
             return 4;
@@ -46,6 +56,4 @@ class StatusBarEndboss extends DrawableObject {
             return 0;
         } 
     }
-
-    
 }

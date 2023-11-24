@@ -13,12 +13,12 @@ class GroundBottle extends DrawableObject {
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png'
     ];
 
+    /**
+     * Represents an instance of a game object.
+     */
     constructor() {
         super().loadImage(this.IMAGE);
         this.x = 300 + Math.random() * 1800;
         this.y = 325;
-
     }
-
-
 }

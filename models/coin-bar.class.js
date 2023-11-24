@@ -11,6 +11,9 @@ class CoinBar extends DrawableObject {
 
     percentage = 0;
 
+    /**
+     * Represents an instance of a game object.
+     */
     constructor(){
         super();
         this.loadImages(this.IMAGES);
@@ -21,13 +24,19 @@ class CoinBar extends DrawableObject {
         this.setPercentage(0);
     }
 
+    /**
+     * Sets the percentage and updates the image accordingly.
+     * @param {number} percentage - The new percentage value.
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
-        this.img = this.imageCache[path];
-      
+        this.img = this.imageCache[path];      
     }
 
+    /**
+     * Resolves the image index based on the percentage value.
+     */
     resolveImageIndex() {
         if (this.percentage == 0 ) {
             return 0;

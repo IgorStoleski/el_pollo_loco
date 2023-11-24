@@ -14,33 +14,40 @@ class World {
     coins = [];
     bottle = [];
     throwableObjects = [];
-    
-    
-    
+    coin_sound = new Audio('audio/coin.mp3');
+    bottle_sound = new Audio('audio/bottle.mp3');
+    pain_sound = new Audio('audio/pain.mp3');
+    music = new Audio('audio/mexico.mp3');
+    jump_sound = new Audio('audio/jump.mp3');
+    air_sound = new Audio('audio/air.mp3');
+    splash_sound = new Audio('audio/bottle_smash.mp3');
+    walking_sound = new Audio('audio/walking.mp3');
+    win_sound = new Audio('audio/win.mp3');
+    you_lose = new Audio('audio/you_lose.mp3');
 
-
+    /**
+     * Represents an instance of a game object.
+     */
     constructor(canvas, keyboard){
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.coin_sound = new Audio('audio/coin.mp3');
-        this.bottle_sound = new Audio('audio/bottle.mp3');
-        this.pain_sound = new Audio('audio/pain.mp3');
-        this.music = new Audio('audio/mexico.mp3');
-        this.jump_sound = new Audio('audio/jump.mp3');
-        this.air_sound = new Audio('audio/air.mp3');
-        this.splash_sound = new Audio('audio/bottle_smash.mp3');
-        this.walking_sound = new Audio('audio/walking.mp3');
-        this.win_sound = new Audio('audio/win.mp3');
         this.draw();
+        this.drawStatusBars();
         this.setWorld();
         this.run();
     }
 
+    /**
+     * Sets the world for the character.
+     */
     setWorld(){
         this.character.world = this;
     }
 
+    /**
+     * Runs the game.
+     */
     run(){
         this.music.play();
         setInterval(() => {            
@@ -53,6 +60,9 @@ class World {
         }, 200)
     }
 
+    /**
+     * Check if the character has throwable objects.
+     */
     checkThowObjects() {
         if (this.keyboard.KEY_D) {
             if (this.bottle.length > 0) {
@@ -64,6 +74,9 @@ class World {
         }
     }
 
+    /**
+     * Check if the character has coins.
+     */
     checkCoins() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
@@ -74,6 +87,9 @@ class World {
         });
     }
 
+    /**
+     * Check if the character has bottles.
+     */
     checkBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
@@ -85,6 +101,9 @@ class World {
         });
     }
 
+    /**
+     * Check if the character has collided with an enemy.
+     */
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if(!enemy.isDying && this.character.isColliding(enemy) && this.character.isAboveGround()){
@@ -101,6 +120,9 @@ class World {
         });
     }
  
+    /**
+     * Check if the character has collided with the boss.
+     */
     checkCollisionsBoss() {
         if(this.character.isColliding(this.endBoss)){
             this.character.hit();
@@ -110,25 +132,44 @@ class World {
         
     } 
 
+    /**
+     * Check if the bottle has collided with the boss.
+     */
     checkSplashBottle() {
         this.throwableObjects.forEach((bottle) => {
             if (this.endBoss && bottle.isColliding(this.endBoss) && !bottle.hitBoss) {
                 bottle.hitBoss = true;
                 bottle.breakBottle();
-                this.splash_sound.loop = false;
-                this.splash_sound.play();
                 this.endBoss.bottleHitBoss();
                 this.statusBarEndboss.setPercentage(this.endBoss.bossEnergy);
             }
         });
     }
     
+    /**
+     * Initializes the game over screen or you lost screen.
+     */
+    gameOver() {
+        if (this.endBoss.bossIsDead()) {
+            muteSound();
+            document.getElementById('end-screen').classList.remove('d-none');
+            document.getElementById('settings').classList.add('d-none-important');
+            this.win_sound.loop = false;
+            this.win_sound.play();             
+        } else {
+            muteSound();
+            document.getElementById('you-lost').classList.remove('d-none');
+            document.getElementById('settings').classList.add('d-none-important');
+            this.you_lose.loop = false;
+            this.you_lose.play();
+        }
+    }
     
-    
-
+    /**
+     * Draws the game.
+     */
     draw(){
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
@@ -137,44 +178,50 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
-        
+        this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
-        // -------- Space for fixed Objects -------------
+        requestAnimationFrame(() => this.draw());
+    }
+
+    /**
+     * Draws the status bars.
+     */
+    drawStatusBars() {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);        
         this.addToMapFlip(this.statusBarEndboss);          
         this.addToMap(this.endbossIcon);        
-        // ----------------------------------------------
-        this.ctx.translate(this.camera_x, 0);
-        
-        this.addToMap(this.character);
-        this.ctx.translate(-this.camera_x, 0);
-        
-        requestAnimationFrame(() => this.draw());
+        requestAnimationFrame(() => this.drawStatusBars());
     }
 
+    /**
+     * Adds multiple objects to the map.
+     * @param {Array<Object>} objects - An array of objects to be added to the map.
+     */
     addObjectsToMap(objects){
         objects.forEach(o => {
             this.addToMap(o);
         });
     }
 
+    /**
+     * Adds a movable object to the map and handles its direction.
+     * @param {MovableObject} mo - The movable object to add.
+     */
     addToMap(mo){
         if(mo.otherDirection){
             this.flipImage(mo);
         }
-
-        mo.draw(this.ctx);
-        /* mo.drawFrame(this.ctx);
-        mo.drawInnerFrame(this.ctx); */
-        
-
+        mo.draw(this.ctx);       
         if(mo.otherDirection){
             this.flipImageBack();
         }
     }
 
+    /**
+     * Flips and adds the provided graphical element to the canvas map.
+     */
     addToMapFlip(mo){
         this.ctx.save();
         this.ctx.translate(mo.x + mo.width / 2, 0);
@@ -184,6 +231,9 @@ class World {
         this.ctx.restore();
     }
 
+    /**
+     * Flips an image horizontally around its center.
+     */
     flipImage(mo){
         this.ctx.save();
         this.ctx.translate(mo.x + mo.width / 2, 0);
@@ -191,9 +241,10 @@ class World {
         this.ctx.translate((mo.x + mo.width / 2) * -1, 0);
     }
 
+    /**
+     * Flips an image horizontally back.
+     */
     flipImageBack(){
         this.ctx.restore();
     }
-    
-
 }

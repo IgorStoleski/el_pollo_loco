@@ -6,7 +6,9 @@ class Level{
     coins;
     bottles;
 
-
+    /**
+     * Represents an instance of a game object.
+     */
     constructor(enemies, clouds, backgroundObjects, coins, bottles){
         this.enemies = enemies;
         this.clouds = clouds;

@@ -12,6 +12,9 @@ class BottleBar extends DrawableObject {
 
     percentage = 0;
 
+    /**
+     * Represents an instance of a game object.
+     */
     constructor(){
         super();
         this.loadImages(this.IMAGES);
@@ -22,6 +25,10 @@ class BottleBar extends DrawableObject {
         this.setPercentage(0);
     }
 
+    /**
+     * Sets the percentage and updates the image accordingly.
+     * @param {number} percentage - The new percentage value.
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
@@ -29,6 +36,9 @@ class BottleBar extends DrawableObject {
       
     }
 
+    /**
+     * Resolves the image index based on the percentage value.
+     */
     resolveImageIndex() {
         if (this.percentage == 0 ) {
             return 0;
@@ -44,6 +54,4 @@ class BottleBar extends DrawableObject {
             return 5;
         }
     }
-
-
 }

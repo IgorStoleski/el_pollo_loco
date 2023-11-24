@@ -13,7 +13,7 @@ class Character extends MovableObject{
         right: 30,
         bottom: 10
     };
-    wortd;
+    
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -81,7 +81,9 @@ class Character extends MovableObject{
 
     world;
     
-
+    /**
+     * Represents an instance of a game object.
+     */
     constructor(){
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -92,55 +94,46 @@ class Character extends MovableObject{
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.applyGravity();
         this.animate();
+        this.checkIdle();
+        this.characterAnimation();
+    }    
 
+    /**
+     * Sets an interval to check for idle keyboard inputs and trigger idle animations accordingly.
+     */
+    checkIdle() {
+    setInterval(() => {
+        if(!this.world.keyboard.RIGHT || !this.world.keyboard.LEFT || this.world.keyboard.KEY_D) {
+            this.playAnimation(this.IMAGES_IDLE);
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+        }
+    }, 2000);
     }
 
-    
-
-    animate(){
-        setInterval(() => {
-            if(!this.world.keyboard.RIGHT || !this.world.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_IDLE);
-                this.playAnimation(this.IMAGES_LONG_IDLE);
-            }
-        }, 250);
-
-        
-        setInterval(() => {
-            
+    /**
+    * Initiates an animation loop to update the character's movements.
+    * Uses setInterval to repeatedly execute movement functions.
+    */
+    animate(){                
+        setInterval(() => {            
             this.world.walking_sound.pause();
-            if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                if (!this.isAboveGround()) {
-                    this.world.walking_sound.play();
-                } else {
-                    this.world.air_sound.play();
-                }
-            }
-            if(this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                if (!this.isAboveGround()) {
-                    this.world.walking_sound.play();
-                } else {
-                    this.world.air_sound.play();
-                }
-                
-            }
-
-            if(this.world.keyboard.SPACE  && !this.isAboveGround()) {
-                this.jump();
-                this.world.jump_sound.play();
-            }
-            
+            this.characterMoveRight();
+            this.characterMoveLeft();
+            this.characterJump();
             
             this.world.camera_x = -this.x + 100;
-        }, 1000/60);
+        }, 1000/60);        
+    }    
 
+    /**
+     * Runs the character's animation loop based on various states.
+     * Uses setInterval to update the animation at regular intervals.
+     */
+    characterAnimation() {
         setInterval(() => {
             if(this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                world.gameOver();
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if(this.isAboveGround()) {
@@ -152,15 +145,58 @@ class Character extends MovableObject{
             }
         }, 50);
     }
+
+    /**
+     * Moves the character to the right if the right arrow key is pressed
+     */
+    characterMoveRight() {
+        if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            if (!this.isAboveGround()) {
+                this.world.walking_sound.play();
+            } else {
+                this.world.air_sound.play();
+            }
+        }
+    }
+
+    /**
+     * Moves the character to the left if the left arrow key is pressed
+     */
+    characterMoveLeft() {
+        if(this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+            if (!this.isAboveGround()) {
+                this.world.walking_sound.play();
+            } else {
+                this.world.air_sound.play();
+            }                
+        }
+    }
+
+    /**
+     * Makes the character jump if the space bar is pressed
+     */
+    characterJump() {
+        if(this.world.keyboard.SPACE  && !this.isAboveGround()) {
+            this.jump();
+            this.world.jump_sound.play();
+        }       
+    }
     
-    
+    /**
+     * Sets the vertical speed to initiate a jump.
+     */
     jump(){
         this.speedY = 30;
     }
 
+    /**
+     * Sets the vertical speed to initiate a jump.
+     */
     smallJump(){
         this.speedY = 10;
-    }   
-
-    
+    }       
 }

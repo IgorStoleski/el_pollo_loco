@@ -4,6 +4,9 @@ class EndbossIcon extends DrawableObject {
         'img/7_statusbars/3_icons/icon_health_endboss.png'
     ];
 
+    /**
+     * Represents an instance of a game object.
+     */
     constructor() {
         super();
         this.loadImage(this.ENDBOSS_ICON);

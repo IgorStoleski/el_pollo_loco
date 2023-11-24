@@ -29,8 +29,14 @@
     <script src="./models/endboss.class.js"></script>
     <title>El Pollo Loco</title>
 </head>
-<body onload="checkOrientation()">
+<body>
     <h1 class="headline">El Pollo Loco</h1>
+    <div id="turn-device" class="device">
+        <div class="device-center">
+            <h3>Please rotate your Device...</h3>
+            <img class="mobile-device" src="img/icons/mobile.png" alt="">
+        </div>
+    </div>
     <div id="fullscreen" class="screen">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="start-screen" class="startscreen">
@@ -41,10 +47,17 @@
             <img class="endscreen-img-bg" src="img/5_background/second_half_background.png" alt="">
             <img class="endscreen-img" src="img/9_intro_outro_screens/game_over/game over.png" alt="game over">
             <div class="restart-btn" onclick="restartGame()">Restart Game</div>
+        </div>
+        <div id="you-lost" class="you-lost-screen d-none">
+            <img class="you-lose-img-bg" src="img/5_background/second_half_background.png" alt="">
+            <img class="you-lose-img" src="img/9_intro_outro_screens/game_over/you lost.png" alt="game over">
+            <div class="restart-btn" onclick="restartGame()">Restart Game</div>
         </div>     
         <div id="settings" class="settings d-none-important">
-            <img id="volume-off-img" onclick="muteSound()" class="volume-img" src="img/icons/volume-mute.svg" alt="">
-            <img id="volume-up-img" onclick="unmuteSound()" class="volume-img d-none" src="img/icons/volume-up.svg" alt="">
+            <img id="fullscreen-max-img" onclick="fullscreen()" class="fullscreen-img" src="img/icons/arrows-maximize.png" alt="">
+            <img id="fullscreen-min-img" onclick="closeFullscreen()" class="fullscreen-img d-none" src="img/icons/arrows-minimize.png" alt="">
+            <img id="volume-off-img" onclick="muteSound()" class="volume-img" src="img/icons/volume-off.png" alt="">
+            <img id="volume-up-img" onclick="unmuteSound()" class="volume-img d-none" src="img/icons/volume-up.png" alt="">
         </div>   
         <div id="hud" class="mobile-btn d-none-important">
             <div class="left-hud ">

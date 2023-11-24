@@ -1,7 +1,6 @@
 class ThrowableObject extends MovableObject {
     hitBoss = false;
-    
-    
+    world;
     
 
     THROW_IMAGES = [
@@ -20,6 +19,9 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
+    /**
+     * Represents an instance of a game object.
+     */
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.THROW_IMAGES);
@@ -31,10 +33,13 @@ class ThrowableObject extends MovableObject {
         this.broken = false;
         this.thow(x, y);
         this.animation();
-        this.splash_sound = new Audio('audio/bottle_smash.mp3');
     }
 
-
+    /**
+     * Throws an object with initial coordinates (x, y).
+     * @param {number} x - The initial x-coordinate.
+     * @param {number} y - The initial y-coordinate.
+     */
     thow(x, y) {
         this.x = x;
         this.y = y;
@@ -45,15 +50,20 @@ class ThrowableObject extends MovableObject {
         }, 25);
     }
 
+    /**
+     * Checks if the bottle is broken.
+     */
     breakBottle() {
         if (!this.broken) {
             this.broken = true;            
             this.playAnimation(this.SPLASH_IMAGES);
-            this.splash_sound.loop = false;
-            this.splash_sound.play();
+            world.splash_sound.play();
         }
     }
 
+    /**
+     * Initiates an animation sequence for the bottle, causing it to rotate or display splash animation.
+     */
     animation() {
         setInterval(() => {
             if (this.y >= 300 || this.hitBoss) {                
@@ -62,7 +72,5 @@ class ThrowableObject extends MovableObject {
                 this.playAnimation(this.THROW_IMAGES);
             }
         }, 25);
-    }
-
-    
+    }    
 }
